@@ -14,3 +14,9 @@ Features
 * Tagging and liking of flicks
 * Commenting
 
+Requirements
+------------
+
+* Ruby 1.9.3
+* MongoDB
+

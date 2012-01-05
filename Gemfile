@@ -2,6 +2,14 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.0.rc2'
 
+# Fixing on mongo 1.4.0 and company with the patch that allows to access Mongo db by
+# URI without mentioning the u/p (useful for local building of apps)
+gem 'mongo', :git => 'git://github.com/mongodb/mongo-ruby-driver.git', :ref => '1001e59e44a2c0f1d086deac8f1f8891bfbdd354'
+gem 'bson_ext'
+gem 'mongoid'
+gem 'mongoid_taggable'
+gem 'inherited_resources'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
