@@ -1,0 +1,26 @@
+<div class="row" id="search">
+  <div class="span8">
+    <script type="text/x-handlebars">
+      {{view Coliseum.SearchView placeholder="What do you want to watch today?"}}
+      {{#collection contentBinding="Coliseum.resultsController" id="results" itemClass="video"}}
+        <img {{bindAttr src="content.imageUrl"}}/>
+        <strong>{{content.title}}</strong>
+        <p>{{content.length}}</p>
+        {{#view Coliseum.WatchButton class="btn" videoBinding="content"}}
+          Watch
+        {{/view}}
+      {{/collection}}
+    </script>
+  </div>
+
+  <div class="span8">
+    <script type="text/x-handlebars">
+      {{#if Coliseum.Player.videoUrl}}
+          <iframe width="560" height="315" {{bindAttr src="Coliseum.Player.videoUrl"}} frameborder="0" allowfullscreen></iframe>
+        {{else}}
+          <div class='nothing'>Please choose the video to watch.</div>
+        {{/if}}
+    </script>
+  </div>
+</div>
+

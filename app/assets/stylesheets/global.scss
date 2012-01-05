@@ -1,0 +1,23 @@
+body {
+  margin-top: 40px;
+}
+
+#search input {
+  width: 450px;
+}
+
+#results {
+  margin-top: 40px;
+  .video {
+    width: 450px;
+    margin-bottom: 10px;
+    overflow: hidden;
+
+    img {
+      width: 120px;
+      height: 90px;
+      float: left;
+      margin: 0 10px 10px 0;
+    }
+  }
+}

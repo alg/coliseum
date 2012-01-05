@@ -1,6 +1,11 @@
 require File.expand_path('../boot', __FILE__)
 
-require 'rails/all'
+#require 'rails/all'
+require "action_controller/railtie"
+require "action_mailer/railtie"
+require "active_resource/railtie"
+require "rails/test_unit/railtie"
+require "sprockets/railtie" # Uncomment this line for Rails 3.1+
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -52,6 +57,8 @@ module Coliseum
 
     # Enable the asset pipeline
     config.assets.enabled = true
+
+    config.assets.paths << File.join(Rails.root, 'lib', 'assets')
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
