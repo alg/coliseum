@@ -15,11 +15,18 @@
 
   <div class="span8">
     <script type="text/x-handlebars">
-      {{#if Coliseum.Player.videoUrl}}
-          <iframe width="450" height="275" {{bindAttr src="Coliseum.Player.videoUrl"}} frameborder="0" allowfullscreen></iframe>
-        {{else}}
-          <div class='nothing'>Please choose the video to watch.</div>
-        {{/if}}
+      <div id="player">
+        <iframe width="450" height="275" {{bindAttr src="Coliseum.Player.videoUrl"}} frameborder="0" allowfullscreen></iframe>
+        <h3>Comments</h3>
+        {{view Coliseum.NewCommentView placeholder="Your comment" valueBinding="Coliseum.commentsList.comment"}}
+        {{#collection contentBinding="Coliseum.commentsList" itemClass="comment"}}
+          <p>{{content.body}}</p>
+        {{/collection}}
+      </div>
+
+      <div id="player-note">
+        Please choose video to play and comment on.
+      </div>
     </script>
   </div>
 </div>
