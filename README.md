@@ -26,14 +26,10 @@ Requirements
 Contributing
 ------------
 
-* Please check the list of planned features above.
-* If you want to pick something for implementation, let me know.
-* If you have something to say, you are welcome to post an issue or
-  leave a comment in the commit. I'm learning thins Ember.js thing,
-  and welcome any feedback.
-* Submit a pull requests if you implemented anything. I may ask you to
-  change a few things, but that should be a familiar thing if you happen
-  to contribute on Github before.
+* Please check the list of planned features above
+* If you want to pick something for implementation, let me know
+* If you have something to say, you are welcome
+* Submit pull requests
 
 Lincese
 -------
