@@ -34,7 +34,6 @@ Coliseum.commentsList = Ember.ArrayController.create({
 
     setTimeout(function() {
       $("#player").show();
-      $("#player-note").hide();
     }, 500);
   }.observes('Coliseum.Player.video'),
 

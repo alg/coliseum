@@ -1,11 +1,17 @@
 <div class="row" id="search">
+  <div class="span16">
+    <script type="text/x-handlebars">
+      {{view Coliseum.SearchView placeholder="What do you want to watch today?" class="search-query"}}
+    </script>
+  </div>
+</div>
+
+<div class="row">
   <div class="span8">
     <script type="text/x-handlebars">
-      {{view Coliseum.SearchView placeholder="What do you want to watch today?"}}
-
       <div id="results">
-        <h3>Search results</h3>
         {{#if Coliseum.resultsController.content}}
+          <h3>Search results</h3>
           <table class='zebra-striped'>
             {{#collection contentBinding="Coliseum.resultsController"}}
               {{#view Coliseum.VideoResultView videoBinding="content" tagName="tr"}}
@@ -14,8 +20,6 @@
               {{/view}}
             {{/collection}}
           </table>
-        {{else}}
-          Nothing found yet.
         {{/if}}
       </div>
     </script>
@@ -24,16 +28,13 @@
   <div class="span8">
     <script type="text/x-handlebars">
       <div id="player">
+        <h3>{{Coliseum.Player.video.title}}</h3>
         <iframe width="450" height="275" {{bindAttr src="Coliseum.Player.videoUrl"}} frameborder="0" allowfullscreen></iframe>
-        <h3>Comments</h3>
+        <h4>Comments</h4>
         {{view Coliseum.NewCommentView placeholder="Your comment" valueBinding="Coliseum.commentsList.comment"}}
         {{#collection contentBinding="Coliseum.commentsList" itemClass="comment"}}
-          <p>{{content.body}}</p>
+          {{content.body}}
         {{/collection}}
-      </div>
-
-      <div id="player-note">
-        Please choose video to play and comment on.
       </div>
     </script>
   </div>

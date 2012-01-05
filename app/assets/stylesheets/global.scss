@@ -2,13 +2,15 @@ body {
   margin-top: 40px;
 }
 
-#search input {
-  width: 450px;
+#search {
+  margin-bottom: 20px;
+}
+
+.search-query {
+  width: 920px;
 }
 
 #results {
-  margin-top: 20px;
-
   tr {
     cursor: pointer;
     .time { width: 30px; }
@@ -17,7 +19,19 @@ body {
 
 #player {
   display: none;
+
+  h3 {
+    overflow: hidden;
+    height: 4ex;
+  }
+
+  input {
+    width: 450px;
+  }
+
+  .comment {
+    padding: 5px;
+    margin: 5px 0;
+  }
 }
-#player-note {
-  display: block;
-}
+
