@@ -2,14 +2,22 @@
   <div class="span8">
     <script type="text/x-handlebars">
       {{view Coliseum.SearchView placeholder="What do you want to watch today?"}}
-      {{#collection contentBinding="Coliseum.resultsController" id="results" itemClass="video"}}
-        <img {{bindAttr src="content.imageUrl"}}/>
-        <strong>{{content.title}}</strong>
-        <p>{{content.length}}</p>
-        {{#view Coliseum.WatchButton class="btn" videoBinding="content"}}
-          Watch
-        {{/view}}
-      {{/collection}}
+
+      <div id="results">
+        <h3>Search results</h3>
+        {{#if Coliseum.resultsController.content}}
+          <table class='zebra-striped'>
+            {{#collection contentBinding="Coliseum.resultsController"}}
+              {{#view Coliseum.VideoResultView videoBinding="content" tagName="tr"}}
+                <td class='title'>{{video.title}}</td>
+                <td class='time'>{{video.length}}</td>
+              {{/view}}
+            {{/collection}}
+          </table>
+        {{else}}
+          Nothing found yet.
+        {{/if}}
+      </div>
     </script>
   </div>
 
