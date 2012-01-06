@@ -1,8 +1,8 @@
 Coliseum.Player = Ember.Object.create({
   video: null,
 
-  videoUrl: function() {
-    return this.video && "http://www.youtube.com/embed/" + this.video.id;
+  video_url: function() {
+    return this.video && "http://www.youtube.com/embed/" + this.video.youtube_id;
   }.property('video'),
 
   isVideoSet: function() {
@@ -17,7 +17,7 @@ Coliseum.commentsList = Ember.ArrayController.create({
   comment: null,
 
   refresh: function() {
-    var vid = Coliseum.Player.video.id;
+    var vid = Coliseum.Player.video.youtube_id;
 
     if (this.current_vid) {
       this.tempStorage[this.current_vid] = this.get('content').map(function(i) {

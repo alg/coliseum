@@ -31,11 +31,11 @@ group :test do
   gem 'turn', '~> 0.8.3', :require => false
   gem 'rspec'
   gem 'rspec-rails'
+  gem 'mongoid-rspec'
   gem 'faker'
   gem 'timecop'
   gem 'factory_girl_rails'
   gem 'shoulda'
-  gem 'mocha'
   gem 'guard'
   gem 'guard-rspec'
 end

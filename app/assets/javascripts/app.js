@@ -1,8 +1,8 @@
 Coliseum = Ember.Application.create();
 
 Coliseum.Video = Ember.Object.extend({
-  id: null,
-  imageUrl: null,
+  youtube_id: null,
+  image_url: null,
   seconds: 0,
   title: null,
 
@@ -15,12 +15,13 @@ Coliseum.Video = Ember.Object.extend({
     return "" + (hrs > 0 ? hrs + ":" : "") +
                 (min < 10 ? "0" : "") + min + ":" +
                 (sec < 10 ? "0" : "") + sec;
-  }.property()
+  }.property("seconds")
 });
+
 Coliseum.Video.fromYoutube = function(data) {
   return Coliseum.Video.create({
-    id: data.id.$t.split(':')[3],
-    imageUrl: data.media$group.media$thumbnail[0].url,
+    youtube_id: data.id.$t.split(':')[3],
+    image_url: data.media$group.media$thumbnail[0].url,
     seconds:  parseInt(data.media$group.yt$duration.seconds),
     title: data.title.$t
   });

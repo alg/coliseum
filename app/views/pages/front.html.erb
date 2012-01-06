@@ -29,7 +29,7 @@
     <script type="text/x-handlebars">
       <div id="player">
         <h3>{{Coliseum.Player.video.title}}</h3>
-        <iframe width="450" height="275" {{bindAttr src="Coliseum.Player.videoUrl"}} frameborder="0" allowfullscreen></iframe>
+        <iframe width="450" height="275" {{bindAttr src="Coliseum.Player.video_url"}} frameborder="0" allowfullscreen></iframe>
         <h4>Comments</h4>
         {{view Coliseum.NewCommentView placeholder="Your comment" valueBinding="Coliseum.commentsList.comment"}}
         {{#collection contentBinding="Coliseum.commentsList" itemClass="comment"}}
