@@ -9,13 +9,17 @@ tagging, a good list of flicks can be collected and nicely organized.
 Todo
 ----
 
-* Add "like" to save (recommend) a video
-* Add "tags" to categorize video
-* Show the list of the most recently saved videos with tags, titles,
-  thumb and the number of comments
-* When searching, show two columns -- local and remote matches;
-  Add paginationg to both
-* To like, tag or comment, you need to be logged through twitter
+* Add "comments". Don't save the video object, but the youtube_id and
+  comment body.
+* Show comments for a given youtube_id and poll for updates every
+  second.
+* Add "tags" and poll for changes every second.
+* Search results pagination.
+
+* Try showing "recent" comments (display video and comments when
+  clicked) when the search query is empty. Replace with the remote
+  results when it's not.
+
 
 Requirements
 ------------
