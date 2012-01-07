@@ -27,18 +27,25 @@ Coliseum.searchResultsController = Em.ArrayController.create({
   search: function() {
     var self = this;
 
+    // hide current results and set the searching status
     this.set('isSearching', true);
     this.set('content', []);
 
-    $.getJSON('http://gdata.youtube.com/feeds/api/videos?alt=json&v=2',
-      { q: this.get('query'), 'max-results': this.get('perPage') }, function(data) {
-        var entries = data.feed.entry;
-        var results = [];
-        for (var i = 0; i < entries.length; i++) results.push(Coliseum.FoundVideo.fromYoutube(entries[i]));
-        self.set('content', results);
-      }).complete(function() {
-        self.set('isSearching', false);
-      });
+    var c = $.getJSON('http://gdata.youtube.com/feeds/api/videos?alt=json&v=2',
+      { q: this.get('query'), 'max-results': this.get('perPage') });
+
+    // populate results
+    c.success(function(data) {
+      var entries = data.feed.entry, results = [];
+      for (var i = 0; i < entries.length; i++)
+        results.push(Coliseum.FoundVideo.fromYoutube(entries[i]));
+      self.set('content', results);
+    });
+
+    // reset the searching status
+    c.complete(function() {
+      self.set('isSearching', false);
+    });
   }
 
 });
