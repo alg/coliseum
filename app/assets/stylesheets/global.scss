@@ -1,16 +1,13 @@
 body {
-  margin-top: 40px;
+  margin-top: 60px;
 }
 
-#search {
+#search-field {
   margin-bottom: 20px;
+  width: 450px;
 }
 
-.search-query {
-  width: 920px;
-}
-
-#results {
+#search-results {
   tr {
     cursor: pointer;
     .time { width: 30px; }

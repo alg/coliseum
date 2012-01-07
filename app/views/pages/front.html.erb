@@ -1,42 +1,25 @@
-<div class="row" id="search">
-  <div class="span16">
-    <script type="text/x-handlebars">
-      {{view Coliseum.SearchView placeholder="What do you want to watch today?" class="search-query"}}
-    </script>
+<script type="text/x-handlebars">
+  <div class="row">
+    {{view Coliseum.SearchView class="span8"}}
+    {{view Coliseum.DetailsView class="span8"}}
   </div>
-</div>
+</script>
 
-<div class="row">
-  <div class="span8">
-    <script type="text/x-handlebars">
-      <div id="results">
-        {{#if Coliseum.resultsController.content}}
-          <h3>Search results</h3>
-          <table class='zebra-striped'>
-            {{#collection contentBinding="Coliseum.resultsController"}}
-              {{#view Coliseum.VideoResultView videoBinding="content" tagName="tr"}}
-                <td class='title'>{{video.title}}</td>
-                <td class='time'>{{video.length}}</td>
-              {{/view}}
-            {{/collection}}
-          </table>
-        {{/if}}
-      </div>
-    </script>
-  </div>
+<script type="text/x-handlebars" data-template-name="search-view">
+  <h3>Search on Youtube</h3>
+  {{view Coliseum.SearchBar placeholder="Search keyword" id="search-field"}}
 
-  <div class="span8">
-    <script type="text/x-handlebars">
-      <div id="player">
-        <h3>{{Coliseum.Player.video.title}}</h3>
-        <iframe width="450" height="275" {{bindAttr src="Coliseum.Player.video_url"}} frameborder="0" allowfullscreen></iframe>
-        <h4>Comments</h4>
-        {{view Coliseum.NewCommentView placeholder="Your comment" valueBinding="Coliseum.commentsList.comment"}}
-        {{#collection contentBinding="Coliseum.commentsList" itemClass="comment"}}
-          {{content.body}}
-        {{/collection}}
-      </div>
-    </script>
-  </div>
-</div>
+  <table id="search-results" class="zebra-striped">
+    {{#each results}}
+      {{#view Coliseum.ResultView videoBinding="this" tagName="tr"}}
+        <td>{{video.title}}</td>
+        <td class="time">{{video.length}}</td>
+      {{/view}}
+    {{/each}}
+  </table>
+</script>
 
+<script type="text/x-handlebars" data-template-name="details-view">
+  <h3>{{viewTitle}}</h3>
+  <iframe width="450" height="275" {{bindAttr src="videoUrl"}} frameborder="0" allowfullscreen></iframe>
+</script>

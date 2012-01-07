@@ -9,8 +9,8 @@ describe VideosController do
   end
 
   describe 'create' do
-    it "should handle duplicates"
-    it "should record the video in database"
+    before  { post :create, :data => { :youtube_id => "abc" } }
+    specify { assigns(:video).should_not be_new_record }
   end
 
 end

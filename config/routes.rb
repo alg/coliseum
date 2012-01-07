@@ -1,5 +1,7 @@
 Coliseum::Application.routes.draw do
 
+  resources :videos
+
   root :to => "pages#front"
 
   # The priority is based upon order of creation:

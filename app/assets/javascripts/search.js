@@ -1,29 +1,44 @@
-Coliseum.resultsController = Ember.ArrayController.create();
-
-Coliseum.WatchButton = Em.Button.extend({
-  video: null,
-  triggerAction: function() {
-    Coliseum.Player.set('video', this.video);
-    this._super();
-  }
-});
-
-Coliseum.SearchView = Ember.TextField.extend({
+/* Search bar component. */
+Coliseum.SearchBar = Em.TextField.extend({
+  valueBinding: 'Coliseum.searchResultsController.query',
   insertNewline: function() {
-    $.getJSON('http://gdata.youtube.com/feeds/api/videos?max-results=20&alt=json&v=2',
-      { q: this.get('value') }, function(data) {
-        var entries = data.feed.entry;
-        var results = [];
-        for (var i = 0; i < entries.length; i++) results.push(Coliseum.Video.fromYoutube(entries[i]));
-        Coliseum.resultsController.set('content', results);
-      });
+    Coliseum.searchResultsController.search();
   }
 });
 
-Coliseum.VideoResultView = Ember.View.extend({
+/* Search results. */
+Coliseum.searchResultsController = Em.ArrayController.create({
+  // list of found videos
+  content: [],
+
+  // current query
+  query: null,
+
+  // current page
+  page: 1,
+
+  /* Refresh the contents by searching for the 'query'. */
+  search: function() {
+    console.log('Search for: ' + this.get('query'));
+    this.pushObject(Coliseum.FoundVideo.create({ title: 'Test', youtube_id: 'VIs00QjiJZQ', seconds: 120 }));
+  }
+
+});
+
+/* Search view */
+Coliseum.SearchView = Em.View.extend({
+  templateName: 'search-view',
+  resultsBinding: 'Coliseum.searchResultsController.content'
+});
+
+/* Single result item view. */
+Coliseum.ResultView = Em.View.extend({
+  // this view video file
   video: null,
+
   click: function(evt) {
-    Coliseum.Player.set('video', this.get('video'));
-    return false;
+    console.log('Clicked on: ', this.get('video'));
+    Coliseum.set('selectedVideo', this.get('video'));
   }
 });
+
