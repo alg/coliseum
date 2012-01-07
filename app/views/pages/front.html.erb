@@ -9,6 +9,10 @@
   <h3>Search on Youtube</h3>
   {{view Coliseum.SearchBar placeholder="Search keyword" id="search-field"}}
 
+  {{#if isSearching}}
+    Loading
+  {{/if}}
+
   <table id="search-results" class="zebra-striped">
     {{#each results}}
       {{#view Coliseum.ResultView videoBinding="this" tagName="tr"}}

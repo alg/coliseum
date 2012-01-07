@@ -17,10 +17,28 @@ Coliseum.searchResultsController = Em.ArrayController.create({
   // current page
   page: 1,
 
+  // items per search page
+  perPage: 15,
+
+  // TRUE when search is in progress
+  isSearching: false,
+
   /* Refresh the contents by searching for the 'query'. */
   search: function() {
-    console.log('Search for: ' + this.get('query'));
-    this.pushObject(Coliseum.FoundVideo.create({ title: 'Test', youtube_id: 'VIs00QjiJZQ', seconds: 120 }));
+    var self = this;
+
+    this.set('isSearching', true);
+    this.set('content', []);
+
+    $.getJSON('http://gdata.youtube.com/feeds/api/videos?alt=json&v=2',
+      { q: this.get('query'), 'max-results': this.get('perPage') }, function(data) {
+        var entries = data.feed.entry;
+        var results = [];
+        for (var i = 0; i < entries.length; i++) results.push(Coliseum.FoundVideo.fromYoutube(entries[i]));
+        self.set('content', results);
+      }).complete(function() {
+        self.set('isSearching', false);
+      });
   }
 
 });
@@ -28,7 +46,8 @@ Coliseum.searchResultsController = Em.ArrayController.create({
 /* Search view */
 Coliseum.SearchView = Em.View.extend({
   templateName: 'search-view',
-  resultsBinding: 'Coliseum.searchResultsController.content'
+  resultsBinding: 'Coliseum.searchResultsController.content',
+  isSearchingBinding: 'Coliseum.searchResultsController.isSearching'
 });
 
 /* Single result item view. */
