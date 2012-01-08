@@ -9,11 +9,10 @@ tagging, a good list of flicks can be collected and nicely organized.
 Todo
 ----
 
-* Add "comments". Don't save the video object, but the youtube_id and
+* Add "comments". Don't save the video object, but the youtubeId and
   comment body.
-* Show comments for a given youtube_id and poll for updates every
-  second.
-* Add "tags" and poll for changes every second.
+* Let people tag video with hashtags in comments (for example, "great
+  video on #emberjs")
 * Search results pagination.
 
 * Try showing "recent" comments (display video and comments when

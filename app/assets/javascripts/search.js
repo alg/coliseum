@@ -25,27 +25,34 @@ Coliseum.searchResultsController = Em.ArrayController.create({
 
   /* Refresh the contents by searching for the 'query'. */
   search: function() {
-    var self = this;
+    var self = this, query = this.get('query');
 
-    // hide current results and set the searching status
-    this.set('isSearching', true);
+    // hide results
     this.set('content', []);
 
-    var c = $.getJSON('http://gdata.youtube.com/feeds/api/videos?alt=json&v=2',
-      { q: this.get('query'), 'max-results': this.get('perPage') });
+    if (query != null && query.length > 0) {
+      // set the searching status
+      this.set('isSearching', true);
 
-    // populate results
-    c.success(function(data) {
-      var entries = data.feed.entry, results = [];
-      for (var i = 0; i < entries.length; i++)
-        results.push(Coliseum.FoundVideo.fromYoutube(entries[i]));
-      self.set('content', results);
-    });
+      var c = $.getJSON('http://gdata.youtube.com/feeds/api/videos?alt=json',
+        { q: query, 'max-results': this.get('perPage'), v: 2 });
 
-    // reset the searching status
-    c.complete(function() {
-      self.set('isSearching', false);
-    });
+      // populate results
+      c.success(function(data) {
+        var entries = data.feed.entry, results = [];
+        for (var i = 0; i < entries.length; i++) {
+          var v = Coliseum.FoundVideo.fromYoutube(entries[i]);
+          console.log(v.get('youtubeId'));
+          results.push(v);
+        }
+        self.set('content', results);
+      });
+
+      // reset the searching status
+      c.complete(function() {
+        self.set('isSearching', false);
+      });
+    }
   }
 
 });
@@ -63,8 +70,12 @@ Coliseum.ResultView = Em.View.extend({
   video: null,
 
   click: function(evt) {
-    console.log('Clicked on: ', this.get('video'));
+    console.log('Clicked on: ', this.get('video').get('youtubeId'));
     Coliseum.set('selectedVideo', this.get('video'));
-  }
+  },
+
+  videoChanged: function() {
+    console.log('yid: ' + this.get('video').get('youtubeId'));
+  }.observes('video')
 });
 

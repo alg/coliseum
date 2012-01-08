@@ -26,4 +26,12 @@
 <script type="text/x-handlebars" data-template-name="details-view">
   <h3>{{viewTitle}}</h3>
   <iframe width="450" height="275" {{bindAttr src="videoUrl"}} frameborder="0" allowfullscreen></iframe>
+
+  <h4>Comments</h4>
+  {{view Coliseum.CommentField id="comment-field"}}
+  {{#each Coliseum.videoCommentsController}}
+    <div class='comment'>
+      <p>{{body}}</p>
+    </div>
+  {{/each}}
 </script>
