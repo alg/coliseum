@@ -1,6 +1,7 @@
 Coliseum::Application.routes.draw do
 
   resources :videos
+  resources :comments
 
   root :to => "pages#front"
 

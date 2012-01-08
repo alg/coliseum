@@ -30,8 +30,6 @@ Coliseum.videoCommentsController = Em.ArrayController.create({
   // TRUE if is currently loading
   isLoading: false,
 
-  cnt: 1,
-
   init: function() {
     var self = this;
     setInterval(function() { self.poll(); }, 5000);
@@ -44,12 +42,28 @@ Coliseum.videoCommentsController = Em.ArrayController.create({
     // start loading
     this.set('isLoading', true);
 
-//    var cnt = this.get('cnt');
-//    this.pushObject(Coliseum.Comment.create({ body: "Test " + this.get('youtubeId') + cnt }));
-//    this.set('cnt', cnt + 1);
+    var self = this, since = this.get('lastCommentId');
+
+    var data = { youtube_id: this.get('youtubeId') };
+    if (since) data.since = since;
+
+    var c = $.getJSON("/comments", data);
+
+    c.success(function(data) {
+      var l = null;
+
+      data.forEach(function(d) {
+        self.unshiftObject(Coliseum.Comment.create({ body: d.body }));
+        l = d.id;
+      });
+
+      if (l) self.set('lastCommentId', l);
+    });
 
     // stop loading
-    this.set('isLoading', false);
+    c.complete(function() {
+      self.set('isLoading', false);
+    });
   },
 
   createComment: function(body) {
@@ -58,7 +72,12 @@ Coliseum.videoCommentsController = Em.ArrayController.create({
     // We'll get the comment from the server not to mess things up
     // in the concurrent environment. There'll be a slight delay,
     // but that's ok. We call it "sending a comment".
-    this.unshiftObject(Coliseum.Comment.create({ body: body }));
+    $.ajax({
+      url: "/comments",
+      data: { comment: { youtube_id: this.get('youtubeId'), body: body } },
+      type: "POST",
+      dataType: "json"
+    });
 
     this.poll();
   },
