@@ -6,11 +6,15 @@ commenting. The idea is that people will find video on a given subject,
 mark it with the tags and comment if they like. By recommending and
 tagging, a good list of flicks can be collected and nicely organized.
 
+Features
+--------
+
+* Search for video on Youtube
+* Commenting (locally, not to Youtube)
+
 Todo
 ----
 
-* Add "comments". Don't save the video object, but the youtubeId and
-  comment body.
 * Let people tag video with hashtags in comments (for example, "great
   video on #emberjs")
 * Search results pagination.
