@@ -21,9 +21,6 @@ Coliseum.videoCommentsController = Em.ArrayController.create({
   // current comments list
   content: [],
 
-  // id of the last comment (for polling)
-  lastCommentId: null,
-
   // current video Youtube Id
   youtubeIdBinding: 'Coliseum*selectedVideo.youtubeId',
 
@@ -31,62 +28,30 @@ Coliseum.videoCommentsController = Em.ArrayController.create({
   isLoading: false,
 
   init: function() {
-    var self = this;
-    setInterval(function() { self.poll(); }, 5000);
+    Coliseum.websocket.setListener(this);
   },
 
-  // polls for new comments
-  poll: function() {
-    if (this.get('isLoading') || this.get('youtubeId') == null) return;
+  onWebsocketCommand: function(cmd, args) {
+    if (cmd == "comments") {
+      this.set('content', []);
+      for (var i = 0; i < args.length; i++) {
+        this.pushObject(Coliseum.Comment.create({ body: args[i] }));
+      }
+    } else if (cmd == "comment") {
+      this.unshiftObject(Coliseum.Comment.create({ body: args[0] }));
+    }
 
-    // start loading
-    this.set('isLoading', true);
-
-    var self = this, since = this.get('lastCommentId');
-
-    var data = { youtube_id: this.get('youtubeId') };
-    if (since) data.since = since;
-
-    var c = $.getJSON("/comments", data);
-
-    c.success(function(data) {
-      var l = null;
-
-      data.forEach(function(d) {
-        self.unshiftObject(Coliseum.Comment.create({ body: d.body }));
-        l = d.id;
-      });
-
-      if (l) self.set('lastCommentId', l);
-    });
-
-    // stop loading
-    c.complete(function() {
-      self.set('isLoading', false);
-    });
+    console.log("command: ", cmd, args);
   },
 
   createComment: function(body) {
-    // temporarily push object here, but later just send a request to
-    // the server with youtubeId and body. Initiate poll() afterwards.
-    // We'll get the comment from the server not to mess things up
-    // in the concurrent environment. There'll be a slight delay,
-    // but that's ok. We call it "sending a comment".
-    $.ajax({
-      url: "/comments",
-      data: { comment: { youtube_id: this.get('youtubeId'), body: body } },
-      type: "POST",
-      dataType: "json"
-    });
-
-    this.poll();
+    Coliseum.websocket.addComment(body);
   },
 
   // resets the comments and starts loading
   youtubeIdChanged: function() {
-    this.set('content', []);
-    this.set('lastCommentId', null);
-    this.poll();
+    var yid = this.get('youtubeId');
+    if (yid) Coliseum.websocket.join(yid);
   }.observes('youtubeId')
 });
 

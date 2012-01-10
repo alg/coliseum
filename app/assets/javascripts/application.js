@@ -16,5 +16,6 @@
 //= require ember-0.9.3.min
 //= require ember-data
 //= require utils
+//= require websocket
 //= require app
 //= require_tree .

@@ -1,6 +1,7 @@
 Coliseum = Ember.Application.create({
   // currently selected video
-  selectedVideo: null
+  selectedVideo: null,
+  websocket: new WS(),
 });
 
 // Video that comes from Youtube -- not a DS object
